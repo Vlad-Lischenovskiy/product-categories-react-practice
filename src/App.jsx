@@ -14,8 +14,8 @@ const products = productsFromServer.map((product) => {
 
   return {
     ...product,
-    category: categories,
-    user: owners,
+    categories,
+    owners,
   };
 });
 
@@ -204,28 +204,25 @@ export const App = () => {
               </thead>
 
               <tbody>
-                {visibleProducts.map(({ id, name, category, user }) => (
-                  <tr data-cy="Product" key={id}>
+                {products.map(product => (
+                  <tr data-cy="Product" key={product.id}>
                     <td className="has-text-weight-bold" data-cy="ProductId">
-                      {id}
+                      {product.id}
                     </td>
 
-                    <td data-cy="ProductName">{name}</td>
+                    <td data-cy="ProductName">{product.name}</td>
                     <td data-cy="ProductCategory">
-                      <span role="img" aria-label="drinks">
-                        {category.icon}
-                      </span>
-                      {category.title}
+                      {`${product.categories.icon} - ${product.categories.title}`}
                     </td>
 
                     <td
                       data-cy="ProductUser"
                       className={cn(
-                        { 'has-text-link': user.sex === 'm' },
-                        { 'has-text-danger': user.sex === 'f' },
+                        'has-text-link',
+                        { 'has-text-danger': product.owners.sex === 'f' },
                       )}
                     >
-                      {user.name}
+                      {product.owners.name}
                     </td>
                   </tr>
                 ))}
